@@ -26,14 +26,9 @@ namespace RctWebApp
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
+            app.Run(async (context) =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Ovo je tekst koji salje ASP.NET veb-aplikacija!");
-                });
+                await context.Response.WriteAsync("Ovo je tekst koji salje ASP.NET veb-aplikacija!");
             });
         }
     }
