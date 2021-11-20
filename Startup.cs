@@ -28,7 +28,19 @@ namespace RctWebApp
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Ovo je tekst koji salje ASP.NET veb-aplikacija!");
+
+                // Procitaj parametar: rds=13000
+                var parametar = context.Request.Query["rsd"];
+
+                // Konvertuj parametar u double (parametar je uvek tekst)
+                var rsd = Convert.ToDouble(parametar);
+                // Pretvori vrednost dinara u valutu euro po kursu 120:1
+                var euro = rsd/120.0;
+                // Pretvori odgovor u JSON format
+                var json = "{\"euro\":" + euro + "}";
+                // Vrati rezultat formatiran kao JSON
+                await context.Response.WriteAsync(json);
+            
             });
         }
     }
