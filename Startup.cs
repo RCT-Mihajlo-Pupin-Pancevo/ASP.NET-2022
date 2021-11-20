@@ -26,9 +26,12 @@ namespace RctWebApp
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Ovo je tekst koji salje ASP.NET veb-aplikacija!");
+                await context.Response.WriteAsync("Ne postoji trazena strana!");
             });
         }
     }
