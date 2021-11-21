@@ -16,12 +16,12 @@
 
             let response = ajax(vebServisUrl);
 
-            response.then( json => prikazi(json.euro));  
+            response.then( json => prikazi(json));  
         }
 
-        function prikazi(euro){
+        function prikazi(json){
             let euroVrednost = document.querySelector("#euroVrednost");
-            euroVrednost.innerHTML = euro;
+            euroVrednost.innerHTML = json.euro;
         }
 
     </script>
