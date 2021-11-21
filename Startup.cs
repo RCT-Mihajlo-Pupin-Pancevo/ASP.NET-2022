@@ -16,6 +16,7 @@ namespace RctWebApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,38 +34,8 @@ namespace RctWebApp
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/euro", async context =>
-                {
-                    var parametar = context.Request.Query["rsd"];
-                    var json = ConvertTo(context.Request.Query["rsd"], 120 );
-                    await context.Response.WriteAsync(json);
-                });
-                endpoints.MapGet("/usd", async context =>
-                {
-                    var parametar = context.Request.Query["rsd"];
-                    var json = ConvertTo(context.Request.Query["rsd"], 105 );
-                    await context.Response.WriteAsync(json);
-                });
-                endpoints.MapGet("/chf", async context =>
-                {
-                    var parametar = context.Request.Query["rsd"];
-                    var json = ConvertTo(context.Request.Query["rsd"], 95 );
-                    await context.Response.WriteAsync(json);
-                });
+                endpoints.MapControllers();
             });
-        }
-
-        string ConvertTo(string parametar, double kurs) {
-
-            // Konvertuj parametar u double (parametar je uvek tekst)
-            var rsd = Convert.ToDouble(parametar);
-            // Pretvori vrednost dinara u valutu euro po zadatom kursu
-            var value = rsd/kurs;
-            // Pretvori odgovor u JSON format
-            var json = "{\"value\":" + value + "}";
-            // Vrati rezultat formatiran kao JSON
-            return json;
-
         }
     }
 }
