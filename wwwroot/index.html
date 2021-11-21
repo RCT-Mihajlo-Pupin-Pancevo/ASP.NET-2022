@@ -12,7 +12,7 @@
 
             let rsd = document.querySelector("#rsd").value;
 
-            let vebServisUrl = window.location.hostname + "?rsd="+rsd;
+            let vebServisUrl = window.location.origin + "?rsd="+rsd;
 
             let response = ajax(vebServisUrl);
 
