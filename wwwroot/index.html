@@ -8,11 +8,12 @@
             return jsonResponse;
         }
 
-        function onKonvertuj(){
+        function onStartConversion(){
 
             let rsd = document.querySelector("#rsd").value;
+            let valuta = document.querySelector("#valuta").value;
 
-            let vebServisUrl = window.location.hostname + "?rsd="+rsd;
+            let vebServisUrl = window.location.origin + "/" + valuta + "?rsd="+rsd;
 
             let response = ajax(vebServisUrl);
 
@@ -20,8 +21,8 @@
         }
 
         function prikazi(json){
-            let euroVrednost = document.querySelector("#euroVrednost");
-            euroVrednost.innerHTML = json.euro;
+            let euroVrednost = document.querySelector("#konvertovanaVrednost");
+            euroVrednost.innerHTML = json.value;
         }
 
     </script>
@@ -32,9 +33,17 @@
 
     <label for="rsd">Unesi vrednost u dinarima:</label>
     <input type="number" id="rsd" placeholder="RSD"/>
-    <button onclick="onKonvertuj()">Konvertuj</button>
     <br/>
-    <label>Vrednost u EURO valuti:</label><span id="euroVrednost"></span>
+    <label for="valuta">Odaberi valutu:</label>
+    <select id="valuta" placeholder="RSD">
+        <option value="euro">Euro</option>
+        <option value="usd">US dolar</option>
+        <option value="chf">Svajcarski franak</option>
+    </select>
+    <br/>
+    <button onclick="onStartConversion()">Konvertuj</button>
+    <br/>
+    <label>Vrednost u odabranoj valuti je:</label> <span id="konvertovanaVrednost"></span>
 
 </body>
 </html>

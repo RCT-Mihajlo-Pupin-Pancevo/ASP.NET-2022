@@ -26,24 +26,45 @@ namespace RctWebApp
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.Run(async (context) =>
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
             {
-
-                // Procitaj parametar: rds=13000
-                var parametar = context.Request.Query["rsd"];
-
-                // Konvertuj parametar u double (parametar je uvek tekst)
-                var rsd = Convert.ToDouble(parametar);
-                // Pretvori vrednost dinara u valutu euro po kursu 120:1
-                var euro = rsd/120.0;
-                // Pretvori odgovor u JSON format
-                var json = "{\"euro\":" + euro + "}";
-                // Vrati rezultat formatiran kao JSON
-                await context.Response.WriteAsync(json);
-            
+                endpoints.MapGet("/euro", async context =>
+                {
+                    var parametar = context.Request.Query["rsd"];
+                    var json = ConvertTo(context.Request.Query["rsd"], 120 );
+                    await context.Response.WriteAsync(json);
+                });
+                endpoints.MapGet("/usd", async context =>
+                {
+                    var parametar = context.Request.Query["rsd"];
+                    var json = ConvertTo(context.Request.Query["rsd"], 105 );
+                    await context.Response.WriteAsync(json);
+                });
+                endpoints.MapGet("/chf", async context =>
+                {
+                    var parametar = context.Request.Query["rsd"];
+                    var json = ConvertTo(context.Request.Query["rsd"], 95 );
+                    await context.Response.WriteAsync(json);
+                });
             });
+        }
+
+        string ConvertTo(string parametar, double kurs) {
+
+            // Konvertuj parametar u double (parametar je uvek tekst)
+            var rsd = Convert.ToDouble(parametar);
+            // Pretvori vrednost dinara u valutu euro po zadatom kursu
+            var value = rsd/kurs;
+            // Pretvori odgovor u JSON format
+            var json = "{\"value\":" + value + "}";
+            // Vrati rezultat formatiran kao JSON
+            return json;
+
         }
     }
 }
