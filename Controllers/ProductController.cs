@@ -25,8 +25,18 @@ namespace RctWebApp.Controllers
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-            var products = connection.Query<Product>(@"select * from Product");
+            var sql = "SELECT * FROM Product";
+            var products = connection.Query<Product>(sql);
             return products.AsList();
         }
+
+        [HttpGet("ByColor")]
+        public IEnumerable<Product> GetProductsByColor(string color)
+        {
+            var sql = "SELECT * FROM Product WHERE Color = @Color";
+            var products = connection.Query<Product>(sql, new { Color = color} );
+            return products.AsList();
+        }
+
     }
 }
